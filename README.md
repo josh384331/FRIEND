@@ -4,7 +4,7 @@ This project contains a multi-dimensional recursive linear interpolator written 
 
 ## How it Works
 
-The code is organized into a module called `dataset_mod`, which defines a type called `dataset`. The `dataset` type represents a dataset with a table of values and provides various operations such as initialization, sorting, printing, and interpolation.
+The code is organized into a module called `dataset_mod`, which defines a type called `dataset`. The `dataset` type represents a dataset with a table of values and provides various operations such as initialization, sorting, printing, and interpolation.  The main purpose of the code is to linearly interpolate multiple(currently 1) dependent variable over many independent variables.  It accomplishes this by recursivly calling the dataset_interp function until the code has calculated the weights for each independent variable, then solves the weighted average for all of the interpolations.
 
 ### Initialization
 
@@ -23,11 +23,10 @@ To print the data in the dataset, use the `dataset_print_data` subroutine. It pr
 ### Interpolation
 
 To perform interpolation on the dataset, use the `dataset_interp` function. It takes the following arguments:
-- `this`: The dataset object.
 - `indep_Vars`: The independent variables.
-- `i_indepVar`: The index of the independent variable to interpolate.
-- `rowi`: The starting row index for interpolation.
-- `rowf`: The ending row index for interpolation.
+- `i_indepVar`: The index of the independent variable to interpolate. Always choose 1 (I will make this automatic eventually)
+- `rowi`: The starting row index for interpolation. This should probably be the start of your table (I will make this automatic eventually)
+- `rowf`: The ending row index for interpolation. This should probably be the end of your table (I will make this automatic eventually)
 
 The function returns the interpolated value.
 
