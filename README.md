@@ -1,4 +1,4 @@
-# MultiInterp
+# Fortran Recursive Interpolation Evaluation for N-dimensional Datasets (FRIEND)
 
 This project contains a multi-dimensional recursive linear interpolator written in Fortran.
 
