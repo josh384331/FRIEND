@@ -14,7 +14,7 @@ To initialize a dataset, use the `dataset_init` subroutine. It takes the followi
 
 ### Sorting Data
 
-To sort the data in the dataset, use the `dataset_sort_data` subroutine. It sorts the data in ascending order based on the first independent variable.
+To sort the data in the dataset, use the `dataset_sort_data` subroutine. It sorts the data in ascending order based on the first independent variable. (this has not beed added yet) 
 
 ### Printing Data
 
