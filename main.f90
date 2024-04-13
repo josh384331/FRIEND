@@ -2,9 +2,9 @@ program test_dataset_mod
     use dataset_mod
     implicit none
     type(dataset) :: ds
-    real, dimension(4,3) :: data_table = reshape([1.0, 1.0, 2.0, 2.0 , 1.0, 3.0, 1.0, 3.0, 1.0, 3.0, 1.0,3.0], [4,3])
+    real, dimension(4,3) :: data_table = reshape([1.0, 1.0, 2.0, 2.0 , 1.0, 2.0, 1.0, 2.0, 1.0, 3.0, 1.0,3.0], [4,3])
     integer :: n_IndepVars = 2
-    real, dimension(2) :: indep_Vars = [1.0, 2.]
+    real, dimension(2) :: indep_Vars = [1.5, 1.5]
     real :: result
 
     ! Test dataset_init
@@ -21,7 +21,7 @@ program test_dataset_mod
     call ds%sort_data()
 
     ! Test dataset_interp
-    result = ds%interp(2, indep_Vars)
+    result = ds%interp(indep_Vars,1, 1, 4)
     print*, "Expected Interpolation result: 2, Interpolation result: ", result
 
     ! Check if the answer is correct
