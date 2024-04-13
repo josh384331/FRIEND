@@ -53,10 +53,19 @@ module dataset_mod
 
 
     recursive function dataset_interp(this,indep_Vars,i_indepVar,rowi,rowf) result(ans)
+    !> This function performs interpolation on a dataset.
+        !! Inputs:
+        !!   this - The dataset object.
+        !!   indep_Vars - The independent variables.
+        !!   i_indepVar - The index of the independent variable to interpolate.
+        !!   rowi - The starting row index for interpolation.
+        !!   rowf - The ending row index for interpolation.
+        !! Returns:
+        !!   ans - The interpolated value.
         class(dataset) :: this
         integer, intent(in) :: i_indepVar, rowi, rowf
         real, dimension(:), intent(in) :: indep_Vars
-        integer :: idx1, i, n, row1i, row1f, row2i, row2f
+        integer :: idx1, n, row1i, row1f, row2i, row2f
         real :: weight
         real :: ans
         logical :: found = .false.
@@ -88,10 +97,11 @@ module dataset_mod
         print *, 'rowi, rowf', rowi, rowf 
         print *, ""
         found = .false.
+        ! loop through the rows of the table starting at rowi and ending at rowf
         do n = rowi, rowf
             print *, 'n, row1i, row1f, row2i, row2f,  ',n,  row1i, row1f, row2i, row2f
             print *, 'this%table(n,i_indepVar)', this%table(n,i_indepVar)
-
+            ! if the independent variable is found, set the index and weight
             if (indep_Vars(i_indepVar) <= this%table(n,i_indepVar) .and. .not. found ) then
                 print *, 'Found', n
                 found = .true.
@@ -100,11 +110,12 @@ module dataset_mod
                 row2i = n
                 weight = (indep_Vars(i_indepVar) - this%table(idx1,i_indepVar)) / (this%table(idx1+1,i_indepVar) &
                 - this%table(idx1,i_indepVar))
-
+            
+            ! if the independent variable is not found and the value changes, set row1i to the next row
             else if (this%table(n,i_indepVar) /= this%table(row1i,i_indepVar) .and. .not. found )then
                 row1i = n
             end if
-
+            ! if the independent variable is found and the value changes, set row2f to the previous row
             if (found .and. this%table(n,i_indepVar) /= this%table(row2i,i_indepVar)) then
                 row2f = n-1
                 exit
