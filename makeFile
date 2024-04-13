@@ -1,0 +1,29 @@
+# Compiler
+FC = gfortran
+
+# Compiler flags
+FFLAGS = -Wall -Wextra
+
+# Source files
+SRCS = main.f90 dataset.f90
+
+# Object files
+OBJS = $(SRCS:.f90=.o)
+
+# Executable
+EXEC = myprogram
+
+# Default target
+all: $(EXEC)
+
+# Rule to compile object files
+%.o: %.f90
+	$(FC) $(FFLAGS) -c $< -o $@
+
+# Rule to link object files into executable
+$(EXEC): $(OBJS)
+	$(FC) $(FFLAGS) $^ -o $@
+
+# Clean target
+clean:
+	rm -f $(OBJS) $(EXEC)
