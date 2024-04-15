@@ -65,9 +65,9 @@ module dataset_mod
         class(dataset) :: this
         integer, intent(in) :: i_indepVar, rowi, rowf
         real, dimension(:), intent(in) :: indep_Vars
-        integer :: idx1, n, row1i, row1f, row2i, row2f
+        integer :: idx1, i, n, row1i, row1f, row2i, row2f
         real :: weight
-        real :: ans
+        real, dimension(:), allocatable :: ans
         logical :: found = .false.
 
         ! perform some checks before interpolating
@@ -83,7 +83,8 @@ module dataset_mod
             stop
         end if
         
-
+        ! allocate ans array
+        allocate(ans(this%n_depVars))
         ! interpolate table
         !! find weight and index
         idx1 = -1
@@ -135,7 +136,10 @@ module dataset_mod
         if (i_indepVar == this%n_indepVars) then
             ! linear interpolate
             ! print *, 'Linear Interpolating'
-            ans = this%table(idx1,this%n_indepVars+1) * (1-weight) + this%table(idx1+1,this%n_indepVars+1) * weight
+            do i = 1, this%n_depVars
+                ! print *, 'this%table(idx1,i), this%table(idx1+1,i)', this%table(idx1,i), this%table(idx1+1,i)
+                ans(i) = this%table(idx1,i+this%n_indepVars) * (1-weight) + this%table(idx1+1,i+this%n_indepVars) * weight
+            end do
         else
             ! recursively interpolate
             ! print *, 'Recursively Interpolating'

@@ -26,12 +26,13 @@ def calculate_plane_points(matrix):
 
 
 
-matrix = np.array([[1, 1, 1], [1, 2, 3], [2, 1, 1], [2, 2, 3]])
+matrix = np.array([[1, 1, 1,4], [1, 2, 3,5], [2, 1, 1,5], [2, 2, 3,6]])
 
 # Extract x, y, and z coordinates from the matrix
 x = matrix[:, 0]
 y = matrix[:, 1]
 z = matrix[:, 2]
+z2 = matrix[:, 3]
 
 # Create a 3D plot
 fig = plt.figure()
@@ -39,18 +40,25 @@ ax = fig.add_subplot(111, projection='3d')
 
 # Plot the surface
 ax.plot_trisurf(x, y, z)
+ax.plot_trisurf(x, y, z2)
 
 
-# plot points on the plane
-X, Y, Z = calculate_plane_points(matrix)
+# plot points on the first plane
+plane1 = np.delete(matrix, 3, 1)
+plane2 = np.delete(matrix, 2, 1)
+X, Y, Z = calculate_plane_points(plane1)
+X, Y, Z2 = calculate_plane_points(plane2)
 
 # save the points
 points = np.array([X.flatten(), Y.flatten(), Z.flatten()]).T
+points2 = np.array([X.flatten(), Y.flatten(), Z2.flatten()]).T
 
 # save the points to a file
 np.savetxt('points.txt', points, delimiter=',')
+np.savetxt('points2.txt', points2, delimiter=',')
 
 ax.scatter(X, Y, Z, color='r')
+ax.scatter(X, Y, Z2, color='g')
 
 # Set labels and title
 ax.set_xlabel('X')
