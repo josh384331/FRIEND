@@ -49,14 +49,26 @@ To use the multi-dimensional recursive linear interpolator, follow these steps:
 
 1. Create a Fortran program and include the `dataset_mod` module.
 2. Initialize a dataset object using the `dataset_init` subroutine, providing the data table and the number of independent variables.
-3. Sort the data using the `dataset_sort_data` subroutine.
-4. Print the data using the `dataset_print_data` subroutine (optional).
-5. Perform interpolation using the `dataset_interp` function, providing the dataset object, the independent variables, the index of the independent variable to interpolate, and the row indices for interpolation.
+3. Perform interpolation using the `dataset_interp` function, providing the independent values and the row indices for interpolation.
 
-Make sure to compile and run the Fortran program using a Fortran compiler.
+note: Step 3 can be performed as many times as you want after initializing the dataset with different independent values. 
 
 ## Example
 
 Here's an example usage of the multi-dimensional recursive linear interpolator:
 
 ```fortran
+program FRIEND_Example
+    use dataset_mod
+    implicit none
+    type(dataset) :: ds
+    real, dimension(4,3) :: data_table = reshape([1.0, 1.0, 2.0, 2.0 , 1.0, 2.0, 1.0, 2.0, 1.0, 3.0, 1.0,3.0], [4,3])
+    integer :: n_IndepVars = 2
+    real, dimension(2) :: indep_Vars = [1.5, 1.5]
+    real :: result
+    
+    ! init dataset
+    call ds%init(data_table, n_IndepVars)
+    ! interpolate
+    result = ds%interp(indep_Vars,1, 1, 4)
+end program FRIEND_Example
