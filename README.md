@@ -4,7 +4,7 @@ This project contains a multi-dimensional recursive linear interpolator written 
 
 ## How it Works
 
-The code is organized into a module called `dataset_mod`, which defines a type called `dataset`. The `dataset` type represents a dataset with a table of values and provides various operations such as initialization, sorting, printing, and interpolation.  The main purpose of the code is to linearly interpolate multiple(currently 1) dependent variable over many independent variables.  It accomplishes this by recursivly calling the dataset_interp function until the code has calculated the weights for each independent variable, then solves the weighted average for all of the interpolations.
+The code is organized into a module called `dataset_mod`, which defines a type called `dataset`. The `dataset` type represents a dataset with a table of values and provides various operations such as initialization, sorting, printing, and interpolation.  The main purpose of the code is to linearly interpolate multiple dependent variable over many independent variables.  It accomplishes this by recursivly calling the dataset_interp function until the code has calculated the weights for each independent variable, then solves the weighted average for all of the interpolations.
 
 ### Initialization
 
@@ -41,7 +41,7 @@ To perform interpolation on the dataset, use the `dataset_interp` function. It t
 - `rowi`: The starting row index for interpolation. This should probably be the start of your table (I will make this automatic eventually)
 - `rowf`: The ending row index for interpolation. This should probably be the end of your table (I will make this automatic eventually)
 
-The function returns the interpolated value.
+The function returns the interpolated values in an array of length equal to the number of dependant variables (stored as `n_depVars`)
 
 ## How to Operate
 
@@ -62,10 +62,10 @@ program FRIEND_Example
     use dataset_mod
     implicit none
     type(dataset) :: ds
-    real, dimension(4,3) :: data_table = reshape([1.0, 1.0, 2.0, 2.0 , 1.0, 2.0, 1.0, 2.0, 1.0, 3.0, 1.0,3.0], [4,3])
+    real, dimension(4,4) :: data_table = reshape([1.0, 1.0, 2.0, 2.0 , 1.0, 2.0, 1.0, 2.0, 1.0, 3.0, 1.0,3.0,4.,5.,5.,6.], [4,4])
     integer :: n_IndepVars = 2
     real, dimension(2) :: indep_Vars = [1.5, 1.5]
-    real :: result
+    real, dimension(2) :: result
     
     ! init dataset
     call ds%init(data_table, n_IndepVars)
