@@ -27,7 +27,7 @@ this has not beed added yet, in the meantime, sort your tables assending by inde
 2,3,1\
 2,3,2
 
-where the first two columns are indpendenat and the third is dependant
+where the first two columns are independent and the third is dependent
 
 ### Printing Data
 
