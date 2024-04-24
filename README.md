@@ -9,8 +9,9 @@ The code is organized into a module called `dataset_mod`, which defines a type c
 ### Initialization
 
 To initialize a dataset, use the `dataset_init` subroutine. It takes the following arguments:
-- `data_table`: The table of data values.
-- `n_IndepVars`: The number of independent variables.
+- `data_table`: The table of data values as dimention(:,:) float
+- `n_IndepVars`: The number of independent variables. as an integer
+- `verbose`: An optional flag to disable warning messages from the program as a logical
 
 ### Sorting Data
 
@@ -36,11 +37,11 @@ To print the data in the dataset, use the `dataset_print_data` subroutine. It pr
 ### Interpolation
 
 To perform interpolation on the dataset, use the `dataset_interp` function. It takes the following arguments:
-- `indep_Vars`: The independent variables.
-- `i_indepVar`: The index of the independent variable to interpolate. Always choose 1 (I will make this automatic eventually)
-- `rowi`: The starting row index for interpolation. This should probably be the start of your table (I will make this automatic eventually)
-- `rowf`: The ending row index for interpolation. This should probably be the end of your table (I will make this automatic eventually)
-
+- `indep_Vars`: Float array of length `n_IndepVars` containing The independent variables. 
+- `i_indepVar`: integer containing the index of the independent variable to interpolate. Always choose 1 (I will make this automatic eventually)
+- `rowi`: Integer containing the starting row index for interpolation. This should probably be the start of your table (I will make this automatic eventually)
+- `rowf`: Integer containing The ending row index for interpolation. This should probably be the end of your table (I will make this automatic eventually)
+- `error`: Integer array of length `n_IndepVars` containing error codes. 0=within range 1=above range -1=below range
 The function returns the interpolated values in an array of length equal to the number of dependant variables (stored as `n_depVars`)
 
 ## How to Operate
