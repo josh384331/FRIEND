@@ -16,7 +16,7 @@ To initialize a dataset, use the `dataset_init` subroutine. It takes the followi
 
 To sort the data in the dataset, use the `dataset_sort_data` subroutine. It sorts the data in ascending order based on the first independent variable. 
     
-this has not beed added yet, in the meantime, sort your tables assending by independant variable starting at the first independant variable. For example:
+this has not been added yet, in the meantime, sort your tables assending by independant variable starting at the first independant variable. For example:
 
 1,2,3\
 1,2,4\
