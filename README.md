@@ -59,7 +59,7 @@ note: Step 3 can be performed as many times as you want after initializing the d
 
 ## Example
 
-Here's an example usage of the multi-dimensional recursive linear interpolator:
+The test cases used for development is coded in `main.f90` and is included inte the repo.  In addition, here's an example usage of the multi-dimensional recursive linear interpolator:
 
 ```fortran
 program FRIEND_Example
