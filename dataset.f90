@@ -151,11 +151,19 @@ module dataset_mod
             if (indep_Vars(i_indepVar) <= this%table(n,i_indepVar) .and. .not. found ) then
                 ! print *, 'Found', n
                 found = .true.
-                idx1 = n-1
-                row1f = n-1
-                row2i = n
-                weight = (indep_Vars(i_indepVar) - this%table(idx1,i_indepVar)) / (this%table(idx1+1,i_indepVar) &
-                - this%table(idx1,i_indepVar))
+                if (low) then
+                    idx1 = n
+                    row1i = n
+                    row2i = n
+                    weight = 0.0
+                else
+                    idx1 = n-1
+                    row1f = n-1
+                    row2i = n
+                    weight = (indep_Vars(i_indepVar) - this%table(idx1,i_indepVar)) / (this%table(idx1+1,i_indepVar) &
+                    - this%table(idx1,i_indepVar))
+                end if
+                
             
             ! if the independent variable is not found and the value changes, set row1i to the next row
             else if (this%table(n,i_indepVar) /= this%table(row1i,i_indepVar) .and. .not. found )then
