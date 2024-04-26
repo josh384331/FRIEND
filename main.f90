@@ -8,6 +8,7 @@ program test_dataset_mod
     real, dimension(:,:), allocatable :: indep_Vars_list
     real, dimension(2) :: indep_Vars = [1.5, 1.5]
     real, dimension(2) :: result
+    real, dimension(2) :: error = [0.,0.]
     
 
     ! Test dataset_init
@@ -36,8 +37,10 @@ program test_dataset_mod
     2.5,3.,1.,1.5,2.,2.5,3.,1.,1.5,2.,2.5,3.,1.,1.5,2.,2.5,3.,4.,4.25,4.5,4.75,5.,4.25,4.5,4.75,5.,5.25,4.5,4.75,5.,5.25,5.5,4.75,&
     5.,5.25,5.5,5.75,5.,5.25,5.5,5.75,6.], [25,4])
     do i = 1, 25
-        result = ds%interp(indep_Vars_list(i,:2),1, 1, 4)
-        print*, "Expected Interpolation result: ", indep_Vars_list(i,3),indep_Vars_list(i,4), "Interpolation result: ", result
+        result = ds%interp(indep_Vars_list(i,:2),1, 1, 4,error)
+        print*, "Expected Interpolation result: ", indep_Vars_list(i,3),indep_Vars_list(i,4), "Interpolation result: ", result,&
+        "Error: ", error
+        error = [0.,0.]
     end do
 
 end program test_dataset_mod

@@ -85,8 +85,13 @@ module dataset_mod
         real :: weight
         real, dimension(:), allocatable :: ans
         logical :: found = .false., high = .false., low = .false.
-        integer, dimension(:), optional, intent(inout) :: error ! integer array of dimention i_indepVar to store error code
-        
+        real, dimension(:), optional, intent(inout) :: error ! integer array of dimention i_indepVar to store error code
+        real, dimension(:), allocatable :: error_local1, error_local2
+        ! allocate error_local array
+        allocate(error_local1(this%n_indepVars))
+        allocate(error_local2(this%n_indepVars))
+        error_local1 = 0
+        error_local2 = 0
         ! perform some checks before interpolating
         !! check to make sure the number of independent variables is correct
         if (size(indep_Vars) /= this%n_indepVars) then
@@ -113,13 +118,13 @@ module dataset_mod
                 high = .false.
                 low = .true.
                 if (present(error)) then
-                    error(i_indepVar) = -1
+                    error(i_indepVar) = indep_Vars(i_indepVar) - this%table(rowi,i_indepVar)
                 end if
             else 
                 high = .true.
                 low = .false.
                 if (present(error)) then
-                    error(i_indepVar) = 1
+                    error(i_indepVar) = indep_Vars(i_indepVar) + this%table(rowf,i_indepVar)
                 end if
             end if
         else
@@ -185,7 +190,6 @@ module dataset_mod
         end if
 
 
-        ! print *, 'idx1, weight, row1i, row1f, row2i, row2f', idx1, weight, row1i, row1f, row2i, row2f
         ! either recursively interpolate or linear interpolate
         if (i_indepVar == this%n_indepVars) then
             ! linear interpolate
@@ -210,14 +214,18 @@ module dataset_mod
             ! recursively interpolate
             if (high .or. low) then
                 if (high) then
-                    ans = dataset_interp(this,indep_Vars,i_indepVar+1,row2i,row2f)
+                    ans = dataset_interp(this,indep_Vars,i_indepVar+1,row2i,row2f,error_local2)
                 else
-                    ans = dataset_interp(this,indep_Vars,i_indepVar+1,row1i,row2f)
+                    ans = dataset_interp(this,indep_Vars,i_indepVar+1,row1i,row2f,error_local1)
                 end if
             else
-                ans = dataset_interp(this,indep_Vars,i_indepVar+1,row1i,row1f) * (1-weight)&
-                + dataset_interp(this,indep_Vars,i_indepVar+1,row2i,row2f) * weight
+                ans = dataset_interp(this,indep_Vars,i_indepVar+1,row1i,row1f,error_local1) * (1-weight)&
+                + dataset_interp(this,indep_Vars,i_indepVar+1,row2i,row2f,error_local2) * weight
             end if
+        end if
+        if (present(error)) then
+            error = error + error_local1
+            error = error + error_local2
         end if
 
     end function dataset_interp
