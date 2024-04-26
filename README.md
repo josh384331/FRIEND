@@ -43,7 +43,7 @@ To perform interpolation on the dataset, use the `dataset_interp` function. It t
 - `i_indepVar`: integer containing the index of the independent variable to interpolate. Always choose 1 (I will make this automatic eventually)
 - `rowi`: Integer containing the starting row index for interpolation. This should probably be the start of your table (I will make this automatic eventually)
 - `rowf`: Integer containing The ending row index for interpolation. This should probably be the end of your table (I will make this automatic eventually)
-- `error`: Integer array of length `n_IndepVars` containing error codes. 0=within range 1=above range -1=below range
+- `error`: Integer array of length `n_IndepVars` containing error codes. 0=within range. positive values indicate requested `indep_Vars` value is above the range of the table.  Negaitve values indicate requested `indep_Vars` value is below the range of the table.  If errors appear at more than one subset of data for a given independent variable the errors will be added.
 
 The function returns the interpolated values in an array of length equal to the number of dependant variables (stored as `n_depVars`)
 
